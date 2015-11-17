@@ -78,7 +78,7 @@ if __name__ == "__main__":
     lines = DumpFileToArrayOfStrings(sys.argv[1])
 
     registers = ConvertListOfStringsToListOfIntsOrDie(lines[0].split())
-    registers = [-42] + registers
+    registers.SetDefault(0)
 
     commands = rlist().SetDefault(0)
     for i in range(1, len(lines)):
@@ -123,14 +123,14 @@ if __name__ == "__main__":
     iterations_passed = max_iterations
     halted = 0
     for i in range(0, max_iterations):
-        print(commands[next_command].ToString() + "\t" + str(registers[1:]))
+        print(commands[next_command].ToString() + "\t" + str(registers))
         next_command = commands[next_command].ChangeRegisters(registers)
         if (next_command >= len(commands)):
             iterations_passed = i + 1
             halted = 1
             break
 
-    print("Iterations passed: {}".format(iterations_passed))
+    print("\nIterations passed: {}".format(iterations_passed))
     if (not halted):
         print("Maximum number of iterations reached")
-    print(registers[1:])
+    print("Registers at the end: " + str(registers))
